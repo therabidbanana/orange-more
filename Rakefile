@@ -25,6 +25,13 @@ Jeweler::Tasks.new do |gemspec|
   gemspec.files = FileList['lib/**/*']
   gemspec.test_files = FileList['spec/**/*.rb']
   gemspec.add_dependency('orange-core', '>= 0.5.7')
+  gemspec.add_dependency('dm-is-awesome_set', '>= 1.0.0')
+  gemspec.add_dependency('rack-openid', '>= 0')
+  gemspec.add_dependency('openid_dm_store', '>= 0')
+  gemspec.add_dependency('radius', '>= 0')
+  gemspec.add_dependency('rest-client', '>= 0')
+  gemspec.add_dependency('mail', '>= 0')
+  gemspec.add_dependency('gattica', '>= 0')
   gemspec.add_development_dependency "rspec", ">= 0"
   gemspec.add_development_dependency "rack-test", ">= 0"
   

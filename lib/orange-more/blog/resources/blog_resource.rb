@@ -70,17 +70,18 @@ module Orange
     end
     
     def blog_for_site(packet, site_id = false)
-      site_id ||= (packet['subsite'].blank? ? packet['site'].id : packet['subsite'].id)
-      blog = OrangeBlog.first(:orange_site_id => site_id)
+      site_id ||= (packet['subsite'].blank? ? packet['site'] : packet['subsite'])
+      site_id = OrangeSite.get(site_id) unless site_id.is_a? OrangeSite
+      blog = OrangeBlog.first(:orange_site => site_id)
       if !blog && packet.request.post? # Only create a new blog if this is a post
         blog = OrangeBlog.new
         blog.title = 'An Orange Hosted Blog'
         blog.orange_site = packet['site']
         blog.save
       end
-      if packet.request.post? && !OrangeRoute.first(:resource => 'blog', :orange_site_id => packet['site'].id)
+      if packet.request.post? && !OrangeRoute.first(:resource => 'blog', :orange_site => packet['site'])
         orange[:sitemap, true].add_route_for(packet,
-          :orange_site_id => site_id, 
+          :orange_site => site_id, 
           :resource => :blog, 
           :resource_id => blog.id,
           :resource_action => :blog_view,

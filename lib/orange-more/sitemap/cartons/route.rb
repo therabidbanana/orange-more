@@ -15,7 +15,6 @@ class OrangeRoute < Orange::SiteCarton
     string :resource_action
     boolean :accept_args, :default => true
   end
-  include DataMapper::Transaction::Resource # Make sure Transactions are included (for awesome_set)
   is :awesome_set, :scope => [:orange_site]
 
   def full_path
@@ -35,7 +34,8 @@ class OrangeRoute < Orange::SiteCarton
 
 
   def self.create_home_for_site(site_id, opts = {})
-    opts = opts.with_defaults({:orange_site_id => site_id, :slug => '_index_', :accept_args => false, :link_text => 'Home'})
+    site_id = OrangeSite.get(site_id) unless site_id.is_a? OrangeSite
+    opts = opts.with_defaults({:orange_site => site_id, :slug => '_index_', :accept_args => false, :link_text => 'Home'})
     home = self.new(opts)
     home.move(:root)
     home.save
