@@ -29,6 +29,22 @@ Jeweler::Tasks.new do |gemspec|
   gemspec.add_dependency('orange-core', '>= 0.5.7')
   gemspec.add_development_dependency "rspec", ">= 0"
   gemspec.add_development_dependency "rack-test", ">= 0"
+  gemspec.post_install_message <<-DOC
+  ===========================================
+  
+  Note: 
+  orange-core requires DataMapper to function. Please make sure to install
+  the appropriate DataMapper adapter for your system:
+  
+  $ gem install [dm-adapter]
+  
+  Mysql:    dm-mysql-adapter
+  Sqlite:   dm-sqlite-adapter
+  Postgres: dm-postgres-adapter
+  
+  orange-core install complete.
+  ===========================================
+  DOC
 end
 Jeweler::GemcutterTasks.new
 
