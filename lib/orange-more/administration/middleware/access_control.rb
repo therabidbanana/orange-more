@@ -1,5 +1,6 @@
 require 'orange-core/middleware/base'
-
+require 'rack/openid'
+require 'openid_dm_store'
 
 
 module Orange::Middleware
