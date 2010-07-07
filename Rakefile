@@ -17,7 +17,7 @@ end
 
 Jeweler::Tasks.new do |gemspec|
   gemspec.name = "orange-more"
-  gemspec.summary = "Plugins for orange"
+  gemspec.summary = "Plugins for Orange"
   gemspec.description = "Orange is a Ruby framework for building managed websites with code as simple as Sinatra"
   gemspec.email = "therabidbanana@gmail.com"
   gemspec.homepage = "http://github.com/therabidbanana/orange"
