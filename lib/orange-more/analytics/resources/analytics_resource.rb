@@ -6,6 +6,7 @@ module Orange
     def stack_init
       options[:email] = orange.options['ga_email']
       options[:password] = orange.options['ga_password']
+      options[:profile] = orange.options['ga_profile']
     end
     
     def gattica
@@ -23,7 +24,7 @@ module Orange
       # authenticate with the API via email/password
       ga = gattica
       accounts = ga.accounts
-      ga.profile_id = accounts.first.profile_id
+      ga.profile_id = options[:profile] || accounts.first.profile_id
       views = ""
       data = ga.get({ :start_date => '2009-01-01', 
                       :end_date => Time.now.localtime.strftime("%Y-%m-%d"),
