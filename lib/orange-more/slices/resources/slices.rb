@@ -10,6 +10,10 @@ module Orange
         if orange.loaded?(resource)
           if orange[resource].respond_to?(mode) || resource == :slices
             content << (id ? orange[resource].__send__(mode, tag.locals.packet, :id => id) : orange[resource].__send__(mode, tag.locals.packet, {:attrs => tag.attr}))
+          elsif orange[resource].class.viewable_actions.include?(mode)
+            opts = {:attrs => tag.attr}
+            opts.merge!(:id => id) if id
+            content << orange[resource].viewable(tag.locals.packet, mode, opts)
           else
             content << "resource #{resource} doesn't respond to #{mode}"
           end
