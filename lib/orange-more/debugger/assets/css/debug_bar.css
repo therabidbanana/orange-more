@@ -9,6 +9,7 @@ body{
 	bottom: 0;
 	background-color: #333;
 	width: 100%;
+	z-index: 999;
 	font: medium "Lucida Grande", Lucida, Verdana, sans-serif;
 }
 #debug_bar h1{
