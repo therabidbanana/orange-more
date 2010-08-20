@@ -3,6 +3,7 @@ class OrangeContactForms < Orange::Carton
   admin do
     title :title
     text :to_address
+    text :from_address
   end
   
   def self.named(tag)

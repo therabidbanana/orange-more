@@ -42,9 +42,9 @@ module Orange
       parts = path.split('/')
       form = model_class.get(parts.last.to_i)
       mail = Mail.new do
-        from "WNSF <info@wnsf.org>"
+        from  "#{packet['site'].name} <#{form.from_address}>"
         to form.to_address
-        subject 'E-mail contact from WNSF.org - '+form.title
+        subject "E-mail contact from #{packet['site'].name} - "+form.title
         body "From: "+params['contact_from']+" ("+params['contact_email_address']+")\n\nMessage:\n"+params['contact_message']
       end
       mail.delivery_method :sendmail
