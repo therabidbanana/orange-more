@@ -108,7 +108,7 @@ module Orange::Middleware
                 profile_data.merge! data_response.from_success_response( resp ).data
               end
             end
-            
+            packet['openid.profile'] = profile_data
             if packet['user.id'] =~ /^https?:\/\/(www.)?google.com\/accounts/
               packet['user.id'] = profile_data["http://axschema.org/contact/email"]
               packet['user.id'] = packet['user.id'].first if packet['user.id'].kind_of?(Array)
