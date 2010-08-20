@@ -33,6 +33,7 @@ module Orange::Middleware
       
     def packet_call(packet)
       packet['user.id'] ||= (packet.session['user.id'] || false)
+      packet['openid.profile'] ||= (packet.session['openid.profile'] || false)
       packet['user'] = orange[:users].user_for(packet) unless packet['user.id'].blank?
       if @openid && need_to_handle?(packet)
         ret = handle_openid(packet)
@@ -108,6 +109,7 @@ module Orange::Middleware
                 profile_data.merge! data_response.from_success_response( resp ).data
               end
             end
+            packet.session['openid.profile'] = profile_data
             packet['openid.profile'] = profile_data
             if packet['user.id'] =~ /^https?:\/\/(www.)?google.com\/accounts/
               packet['user.id'] = profile_data["http://axschema.org/contact/email"]

@@ -2,7 +2,7 @@ require 'dm-timestamps'
 class OrangeBlogPost < Orange::Carton
   id
   front do
-    title :title
+    title :title, :length => 255
     fulltext :body
   end
   admin do
@@ -10,7 +10,7 @@ class OrangeBlogPost < Orange::Carton
   end
   orange do
     boolean :published, :default => false
-    text :slug
+    text :slug, :length => 255
     text :author
   end
   
@@ -21,7 +21,7 @@ class OrangeBlogPost < Orange::Carton
   
   def title=(t)
     self.attribute_set('title', t)
-    self.attribute_set('slug', t.downcase.gsub(/[']+/, "").gsub(/[^a-z0-9]+/, "_"))
+    self.attribute_set('slug', t.downcase.gsub(/<\/?[^>]*>/, "").gsub(/[']+/, "").gsub(/[^a-z0-9]+/, "_"))
   end
   
   def published=(val)
