@@ -35,7 +35,8 @@ module Orange
     def mailer(packet, opts = {})
       params = packet.request.params
       route = params['r']
-      if params['contact_phone'] != ''
+      # The contact phone number is a honeypot field.
+      if params['contact_phone'] != '' || params['contact_from'].blank? || params['contact_email_address'].blank?
         packet.flash['error'] = "An error has occurred. Please try your submission again."
         packet.reroute(route)
       end
@@ -45,7 +46,7 @@ module Orange
       mail = Mail.new do
         from  "#{packet['site'].name} <#{form.from_address}>"
         to form.to_address
-        subject "E-mail contact from #{packet['site'].name} - "+form.title
+        subject "E-mail contact from #{packet['site'].name}"
         body "From: "+params['contact_from']+" ("+params['contact_email_address']+")\n\nMessage:\n"+params['contact_message']
       end
       mail.delivery_method :sendmail
