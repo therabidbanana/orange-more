@@ -8,7 +8,12 @@ module Orange
     
     def access_allowed?(packet, user)
       u = model_class.first(:open_id => user)
-      return false unless u
+      unless u
+        # nil out invalid user
+        packet.session['user.id'] = nil
+        packet['user.id'] = nil
+        return false
+      end
       u.allowed?(packet)
     end
     
