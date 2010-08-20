@@ -6,16 +6,15 @@ module Orange
         content = ''
         resource = (tag.attr['resource'] || :slices).to_sym
         id = tag.attr['id'] || nil
-        mode = (tag.attr['mode'] || tag.attr['chunk'] || (id ? :show : :index )).to_sym
+        mode = (tag.attr['mode'] || tag.attr['action'] || tag.attr['chunk'] || (id ? :show : :index )).to_sym
         if orange.loaded?(resource)
-          if orange[resource].respond_to?(mode) || resource == :slices
-            content << (id ? orange[resource].__send__(mode, tag.locals.packet, :id => id) : orange[resource].__send__(mode, tag.locals.packet, {:attrs => tag.attr}))
-          elsif orange[resource].class.viewable_actions.include?(mode)
-            opts = {:attrs => tag.attr}
-            opts.merge!(:id => id) if id
-            content << orange[resource].viewable(tag.locals.packet, mode, opts)
+          opts = {:attrs => tag.attr, :mode => mode}
+          opts.merge!(:id => id) if id
+          ret = orange[resource].view(tag.locals.packet, opts)            
+          if ret.blank? 
+            content << "resource #{resource} doesn't respond to #{mode}" 
           else
-            content << "resource #{resource} doesn't respond to #{mode}"
+            content << ret
           end
         else
           content << "resource #{resource} not loaded"
@@ -25,7 +24,8 @@ module Orange
     end
     
     def view(packet, *args)
-      mode = packet['route.resource_action']
+      opts = args.extract_options!
+      mode = opts[:mode] || packet['route.resource_action']
       do_view(packet, mode, args.extract_options!)
     end
     
