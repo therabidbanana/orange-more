@@ -116,7 +116,7 @@ module Orange::Middleware
               packet['user.id'] = packet['user.id'].first if packet['user.id'].kind_of?(Array)
             end
             
-            if packet['user.id'] =~ /^https?:\/\/(www.)?yahoo.com/ || packet['user.id'] =~ /^https?:\/\/(my.)?yahoo.com/
+            if packet['user.id'] =~ /^https?:\/\/(www.)?yahoo.com/ || packet['user.id'] =~ /^https?:\/\/(my\.|me\.)?yahoo.com/
               packet['user.id'] = profile_data["http://axschema.org/contact/email"]
               packet['user.id'] = packet['user.id'].first if packet['user.id'].kind_of?(Array)
             end
