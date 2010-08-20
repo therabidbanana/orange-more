@@ -16,11 +16,11 @@ module Orange
       orange[:admin, true].add_link("Content", :resource => @my_orange_name, :text => 'Assets')
       orange[:radius, true].define_tag "asset" do |tag|
         if tag.attr['id']
-          (m = model_class.first(:id => tag.attr['id'])) ? m.to_asset_tag : 'Invalid Asset'
+          ret = (m = model_class.first(:id => tag.attr['id'])) ? m.to_asset_tag : 'Invalid Asset'
           if tag.attr['wrap']
-            m = "<div class='#{tag.attr['wrap']}'>#{m}</div>"
+            ret = "<div class='#{tag.attr['wrap']}'>#{ret}</div>"
           else
-            m
+            ret
           end
         else
           ''
