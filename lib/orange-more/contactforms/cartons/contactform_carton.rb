@@ -1,4 +1,4 @@
-class OrangeContactForms < Orange::Carton
+class OrangeContactForm < Orange::Carton
   id
   admin do
     title :title

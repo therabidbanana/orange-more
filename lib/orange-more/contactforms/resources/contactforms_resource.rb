@@ -2,7 +2,7 @@ require 'mail'
 
 module Orange
   class ContactFormsResource < Orange::ModelResource
-    use OrangeContactForms
+    use OrangeContactForm
     call_me :contactforms
     expose :mailer
     def stack_init
