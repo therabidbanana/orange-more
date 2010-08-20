@@ -4,6 +4,7 @@ module Orange
   class ContactFormsResource < Orange::ModelResource
     use OrangeContactForms
     call_me :contactforms
+    expose :mailer
     def stack_init
       orange[:admin, true].add_link("Content", :resource => @my_orange_name, :text => 'Contact Forms')
       orange[:radius].define_tag "contactform" do |tag|
