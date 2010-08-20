@@ -21,7 +21,26 @@ class OrangeAsset < Orange::Carton
     DOC
   end
   
+  def pdf?
+    mime_type =~ /^application\/pdf/
+  end
+  def image?
+    mime_type =~ /^image/
+  end
+  def file?
+    !(pdf? || image?)
+  end
+  
   def to_asset_tag(alt = "")
-    "<img src='#{file_path}' border='0' alt='#{alt}' />"
+    alt = alt.blank? ? caption : alt
+    alt = alt.blank? ? name : alt
+    case mime_type
+    when /^image/
+      "<img src='#{file_path}' border='0' alt='#{alt}' />"
+    when /^application\/pdf/
+      "<span class='pdf_link'><a href='#{file_path}'>#{alt}</a></span>"
+    else
+      "<span class='file_link'><a href='#{file_path}'>#{alt}</a></span>"
+    end
   end
 end

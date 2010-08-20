@@ -17,6 +17,11 @@ module Orange
       orange[:radius, true].define_tag "asset" do |tag|
         if tag.attr['id']
           (m = model_class.first(:id => tag.attr['id'])) ? m.to_asset_tag : 'Invalid Asset'
+          if tag.attr['wrap']
+            m = "<div class='#{tag.attr['wrap']}'>#{m}</div>"
+          else
+            m
+          end
         else
           ''
         end
