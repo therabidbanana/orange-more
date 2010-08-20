@@ -8,15 +8,15 @@ module Orange
     def stack_init
       orange[:admin, true].add_link("Content", :resource => @my_orange_name, :text => 'Contact Forms')
       orange[:radius].define_tag "contactform" do |tag|
-     	  if tag.attr["name"] && model_class.named(tag.attr["name"]).count >0
+        if tag.attr["name"] && model_class.named(tag.attr["name"]).count >0
           m = model_class.named(tag.attr["name"]).first #selects contactform based on title
-	      elsif model_class.all.count > 0
-	        if tag.attr["id"]
-      	    m = model_class.get(tag.attr["id"])
-	        else
-	          m = model_class.first
-	        end
-	      end
+        elsif model_class.all.count > 0
+          if tag.attr["id"]
+            m = model_class.get(tag.attr["id"])
+          else
+            m = model_class.first
+          end
+        end
         unless m.nil?
           template = tag.attr["template"] || "contactform"
           orange[:contactforms].contactform(tag.locals.packet, {:model => m, :template => template, :id => m.id})
@@ -39,7 +39,7 @@ module Orange
         packet.flash['error'] = "An error has occurred. Please try your submission again."
         packet.reroute(route)
       end
-      path = packet['route.path']
+      path = packet['route.resource_path']
       parts = path.split('/')
       form = model_class.get(parts.last.to_i)
       mail = Mail.new do
