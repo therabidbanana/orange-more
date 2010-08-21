@@ -75,7 +75,7 @@ module Orange
     def s3_connect!
       if(options[:s3_bucket])
         id = options[:s3_access_key_id] || ENV['S3_KEY']
-        secret = options[:s3_access_key_id] || ENV['S3_SECRET']
+        secret = options[:s3_secret_access_key] || ENV['S3_SECRET']
         AWS::S3::Base.establish_connection!(
             :access_key_id     => id,
             :secret_access_key => secret
