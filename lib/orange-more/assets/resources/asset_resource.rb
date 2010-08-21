@@ -14,9 +14,9 @@ module Orange
     
     def stack_init
       require 'aws-s3' if orange.options[:s3_bucket]
-      options[:s3_bucket] = orange.options[:s3_bucket, nil]
-      options[:s3_access_key_id] = orange.options[:s3_access_key_id, nil]
-      options[:s3_secret_access_key] = orange.options[:s3_secret_access_key, nil]
+      options[:s3_bucket] = orange.options[:s3_bucket]
+      options[:s3_access_key_id] = orange.options[:s3_access_key_id]
+      options[:s3_secret_access_key] = orange.options[:s3_secret_access_key]
       
       orange[:admin, true].add_link("Content", :resource => @my_orange_name, :text => 'Assets')
       orange[:radius, true].define_tag "asset" do |tag|
@@ -72,9 +72,11 @@ module Orange
     end
     
     def s3_connect!
+      id = options[:s3_access_key_id] || ENV['S3_KEY']
+      secret = options[:s3_access_key_id] || ENV['S3_SECRET']
       AWS::S3::Base.establish_connection!(
-          :access_key_id     => options[:s3_access_key_id],
-          :secret_access_key => options[:s3_secret_access_key]
+          :access_key_id     => id,
+          :secret_access_key => secret
         )
     end
     
