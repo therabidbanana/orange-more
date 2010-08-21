@@ -259,6 +259,7 @@ module Orange
       if match = route.link_text.match(/^\{([-a-z0-9A-Z_]+)\}$/)
         resource = route.resource.to_sym
         return route.link_text unless orange.loaded?(resource)
+        return route.link_text if route.resource_id.blank?
         orange[resource].model_class.get(route.resource_id).__send__(match[1])
       else
         route.link_text
