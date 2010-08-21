@@ -64,6 +64,13 @@ module Orange
             parents = orange[:sitemap].routes_for(packet, :resource => '', :resource_id => '', :slug => "pages", :orange_site_id => m.orange_site.id)
             route_hash[:parent] = parents.first unless parents.blank?
             orange[:sitemap].add_route_for(packet, route_hash)
+          elsif orange.loaded?(:sitemap)
+            r.each do |route|
+              if route.default_slug? 
+                route.slug = orange[:sitemap].slug(m.title)
+                route.save
+              end
+            end
           end
         end
       end
