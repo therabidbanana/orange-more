@@ -73,17 +73,18 @@ module Orange
     end
     
     def s3_connect!
-      id = options[:s3_access_key_id] || ENV['S3_KEY']
-      secret = options[:s3_access_key_id] || ENV['S3_SECRET']
-      AWS::S3::Base.establish_connection!(
-          :access_key_id     => id,
-          :secret_access_key => secret
-        )
+      if(options[:s3_bucket])
+        id = options[:s3_access_key_id] || ENV['S3_KEY']
+        secret = options[:s3_access_key_id] || ENV['S3_SECRET']
+        AWS::S3::Base.establish_connection!(
+            :access_key_id     => id,
+            :secret_access_key => secret
+          )
+      end
     end
     
     def ensure_dir!
       if(options[:s3_bucket])
-        s3_connect!
         AWS::S3::Bucket.create(options[:s3_bucket]) unless AWS::S3::Bucket.find(options[:s3_bucket])
       else
         FileUtils.mkdir_p(orange.app_dir('assets','uploaded')) unless File.exists?(orange.app_dir('assets','uploaded'))
@@ -91,6 +92,7 @@ module Orange
     end
     
     def handle_new_file(filename, file)
+      s3_connect!
       ensure_dir!
       if(options[:s3_bucket])
         filename = unique_s3_name(filename)
@@ -157,6 +159,7 @@ module Orange
     def onDelete(packet, m, opts = {})
       begin
         if(m.s3_bucket)
+          s3_connect!
           AWS::S3::S3Object.delete(m.path, m.s3_bucket) if m.path
           AWS::S3::S3Object.delete(m.secondary_path, m.s3_bucket) if m.secondary_path
         else
