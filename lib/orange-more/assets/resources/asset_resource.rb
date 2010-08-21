@@ -108,7 +108,7 @@ module Orange
       i = 1
       extname = File.extname(filename)
       basename = File.basename(filename)
-      while S3Object.exists?("#{basename}_#{i}#{extname}", options[:s3_bucket])
+      while AWS::S3::S3Object.exists?("#{basename}_#{i}#{extname}", options[:s3_bucket])
         i += 1
       end
       "#{basename}_#{i}#{extname}"
