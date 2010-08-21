@@ -107,7 +107,7 @@ module Orange
       return filename unless AWS::S3::S3Object.exists?(filename, options[:s3_bucket])
       i = 1
       extname = File.extname(filename)
-      basename = File.basename(filename)
+      basename = File.basename(filename, extname)
       while AWS::S3::S3Object.exists?("#{basename}_#{i}#{extname}", options[:s3_bucket])
         i += 1
       end
@@ -118,7 +118,7 @@ module Orange
       return filename unless File.exists?(orange.app_dir('assets','uploaded', filename))
       i = 1
       extname = File.extname(filename)
-      basename = File.basename(filename)
+      basename = File.basename(filename, extname)
       while File.exists?(orange.app_dir('assets', 'uploaded', "#{basename}_#{i}#{extname}"))
         i += 1
       end
