@@ -10,9 +10,14 @@ class OrangeAsset < Orange::Carton
     string :secondary_path, :length => 255, :required => false
     string :secondary_mime_type
   end
+  property :s3_bucket, String, :length => 64, :required => false
   
   def file_path
-    File.join('', 'assets', 'uploaded', path)
+    if(s3_bucket)
+      "http://s3.amazonaws.com/#{s3_bucket}/#{path}"
+    else
+      File.join('', 'assets', 'uploaded', path)
+    end
   end
   
   def to_s

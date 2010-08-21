@@ -13,6 +13,11 @@ module Orange
     call_me :assets
     
     def stack_init
+      require 'aws-s3' if orange.options[:s3_bucket]
+      options[:s3_bucket] = orange.options[:s3_bucket, nil]
+      options[:s3_access_key_id] = orange.options[:s3_access_key_id, nil]
+      options[:s3_secret_access_key] = orange.options[:s3_secret_access_key, nil]
+      
       orange[:admin, true].add_link("Content", :resource => @my_orange_name, :text => 'Assets')
       orange[:radius, true].define_tag "asset" do |tag|
         if tag.attr['id']
@@ -47,29 +52,66 @@ module Orange
     def onNew(packet, params = {})
       m = false
       if(file = params['file'][:tempfile])
-        file_path = orange.app_dir('assets','uploaded', params['file'][:filename]) if params['file'][:filename]
-        # Check for secondary file (useful for videos/images with thumbnails)
-        if(params['file2'] && secondary = params['file2'][:tempfile])
-          secondary_path = orange.app_dir('assets','uploaded', params['file2'][:filename])
+        file_path = handle_new_file(params['file'])
+        if(params['file2'] && secondary = params['file2'][:tempfile]) 
+          secondary_path = handle_new_file(params['file2'])
         else
           secondary_path = nil
         end
-        # Move the files
-        FileUtils.cp(file.path, file_path)
-        FileUtils.chmod(0644, file_path)
-        FileUtils.cp(secondary.path, secondary_path) if secondary_path
-        FileUtils.chmod(0644, secondary_path) if secondary_path
         
-        params['path'] = params['file'][:filename] if file_path
-        params['secondary_path'] = params['file2'][:filename] if secondary_path
+        params['path'] = file_path if file_path
+        params['secondary_path'] = secondary_path if secondary_path
         params['mime_type'] = params['file'][:type] if file_path
         params['secondary_mime_type'] = params['file2'][:type] if secondary_path
         params.delete('file')
         params.delete('file2')
-        
+        params['s3_bucket'] = options[:s3_bucket] if options[:s3_bucket]
         m = model_class.new(params)
       end
       m
+    end
+    
+    def s3_connect!
+      AWS::S3::Base.establish_connection!(
+          :access_key_id     => options[:s3_access_key_id],
+          :secret_access_key => options[:s3_secret_access_key]
+        )
+    end
+    
+    def handle_new_file(file_obj)
+      filename = file_obj[:filename]
+      if(options[:s3_bucket])
+        s3_connect!
+        filename = unique_s3_name(filename)
+        S3Object.store(filename, open(file_obj[:tempfile]), options[:s3_bucket], :access => :public_read)
+      else
+        filename = unique_local_name(filename)
+        FileUtils.cp(file_obj[:tempfile].path, orange.app_dir('assets','uploaded', filename))
+        FileUtils.chmod(0644, file_path)
+      end
+      return filename
+    end
+    
+    def unique_s3_name(filename)
+      return filename unless S3Object.exists?(filename, options[:s3_bucket])
+      i = 1
+      extname = File.extname(filename)
+      basename = File.basename(filename)
+      while S3Object.exists?("#{basename}_#{i}#{extname}", options[:s3_bucket])
+        i += 1
+      end
+      "#{basename}_#{i}#{extname}"
+    end
+    
+    def unique_local_name(filename)
+      return filename unless File.exists?(orange.app_dir('assets','uploaded', filename))
+      i = 1
+      extname = File.extname(filename)
+      basename = File.basename(filename)
+      while File.exists?(orange.app_dir('assets', 'uploaded', "#{basename}_#{i}#{extname}"))
+        i += 1
+      end
+      "#{basename}_#{i}#{extname}"
     end
     
     # Creates a new model object and saves it (if a post), then reroutes to the main page
@@ -103,8 +145,13 @@ module Orange
     
     def onDelete(packet, m, opts = {})
       begin
-        FileUtils.rm(orange.app_dir('assets','uploaded', m.path)) if m.path
-        FileUtils.rm(orange.app_dir('assets','uploaded', m.secondary_path)) if m.secondary_path
+        if(m.s3_bucket)
+          S3Object.delete(m.path, m.s3_bucket) if m.path
+          S3Object.delete(m.secondary_path, m.s3_bucket) if m.secondary_path
+        else
+          FileUtils.rm(orange.app_dir('assets','uploaded', m.path)) if m.path
+          FileUtils.rm(orange.app_dir('assets','uploaded', m.secondary_path)) if m.secondary_path
+        end
       rescue
         # Problem deleting file
       end
