@@ -83,6 +83,7 @@ module Orange
     
     def ensure_dir!
       if(options[:s3_bucket])
+        s3_connect!
         AWS::S3::Bucket.create(options[:s3_bucket]) unless AWS::S3::Bucket.find(options[:s3_bucket])
       else
         FileUtils.mkdir_p(orange.app_dir('assets','uploaded')) unless File.exists?(orange.app_dir('assets','uploaded'))
@@ -92,7 +93,6 @@ module Orange
     def handle_new_file(filename, file)
       ensure_dir!
       if(options[:s3_bucket])
-        s3_connect!
         filename = unique_s3_name(filename)
         AWS::S3::S3Object.store(filename, file, options[:s3_bucket], :access => :public_read)
       else
