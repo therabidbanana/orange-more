@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Haslem"]
-  s.date = %q{2010-08-21}
+  s.date = %q{2010-08-23}
   s.description = %q{Orange is a Ruby framework for building managed websites with code as simple as Sinatra}
   s.email = %q{therabidbanana@gmail.com}
   s.extra_rdoc_files = [
@@ -36,11 +36,6 @@ Gem::Specification.new do |s|
      "lib/orange-more/administration/views/openid_login.haml",
      "lib/orange-more/administration/views/users/create.haml",
      "lib/orange-more/administration/views/users/edit.haml",
-     "lib/orange-more/adverts.rb",
-     "lib/orange-more/adverts/cartons/adverts_carton.rb",
-     "lib/orange-more/adverts/plugin.rb",
-     "lib/orange-more/adverts/resources/adverts_resource.rb",
-     "lib/orange-more/adverts/views/adverts/adverts.haml",
      "lib/orange-more/analytics.rb",
      "lib/orange-more/analytics/middleware/analytics.rb",
      "lib/orange-more/analytics/plugin.rb",
@@ -86,37 +81,6 @@ Gem::Specification.new do |s|
      "lib/orange-more/disqus/plugin.rb",
      "lib/orange-more/disqus/resources/disqus_resource.rb",
      "lib/orange-more/disqus/views/disqus/comment_thread.haml",
-     "lib/orange-more/donations.rb",
-     "lib/orange-more/donations/cartons/donation_carton.rb",
-     "lib/orange-more/donations/plugin.rb",
-     "lib/orange-more/donations/resources/donations_resource.rb",
-     "lib/orange-more/donations/views/donations/donate_form.haml",
-     "lib/orange-more/donations/views/donations/donate_thanks.haml",
-     "lib/orange-more/donations/views/donations/paypal_form.haml",
-     "lib/orange-more/events.rb",
-     "lib/orange-more/events/assets/js/events.js",
-     "lib/orange-more/events/cartons/orange_calendar.rb",
-     "lib/orange-more/events/cartons/orange_event.rb",
-     "lib/orange-more/events/plugin.rb",
-     "lib/orange-more/events/resources/calendar_resource.rb",
-     "lib/orange-more/events/resources/event_resource.rb",
-     "lib/orange-more/events/views/calendar/calendar.haml",
-     "lib/orange-more/events/views/events/create.haml",
-     "lib/orange-more/events/views/events/edit.haml",
-     "lib/orange-more/events/views/events/list.haml",
-     "lib/orange-more/events/views/events/show.haml",
-     "lib/orange-more/events/views/events/table_row.haml",
-     "lib/orange-more/members.rb",
-     "lib/orange-more/members/cartons/member_carton.rb",
-     "lib/orange-more/members/plugin.rb",
-     "lib/orange-more/members/resources/members_resource.rb",
-     "lib/orange-more/members/views/members/create.haml",
-     "lib/orange-more/members/views/members/edit.haml",
-     "lib/orange-more/members/views/members/live.show.haml",
-     "lib/orange-more/members/views/members/login.haml",
-     "lib/orange-more/members/views/members/logout.haml",
-     "lib/orange-more/members/views/members/profile.haml",
-     "lib/orange-more/members/views/members/register.haml",
      "lib/orange-more/news.rb",
      "lib/orange-more/news/cartons/news.rb",
      "lib/orange-more/news/plugin.rb",
@@ -158,18 +122,7 @@ Gem::Specification.new do |s|
      "lib/orange-more/slices/middleware/radius_parser.rb",
      "lib/orange-more/slices/plugin.rb",
      "lib/orange-more/slices/resources/radius.rb",
-     "lib/orange-more/slices/resources/slices.rb",
-     "lib/orange-more/subsites.rb",
-     "lib/orange-more/subsites/cartons/subsite.rb",
-     "lib/orange-more/subsites/middleware/subsite_load.rb",
-     "lib/orange-more/subsites/plugin.rb",
-     "lib/orange-more/subsites/resources/subsite_resource.rb",
-     "lib/orange-more/subsites/views/subsites/index.haml",
-     "lib/orange-more/testimonials.rb",
-     "lib/orange-more/testimonials/cartons/testimonials_carton.rb",
-     "lib/orange-more/testimonials/plugin.rb",
-     "lib/orange-more/testimonials/resources/testimonials_resource.rb",
-     "lib/orange-more/testimonials/views/testimonials/testimonials.haml"
+     "lib/orange-more/slices/resources/slices.rb"
   ]
   s.homepage = %q{http://github.com/therabidbanana/orange}
   s.rdoc_options = ["--charset=UTF-8"]

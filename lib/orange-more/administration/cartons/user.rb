@@ -16,7 +16,10 @@ class OrangeUser < Orange::Carton
       true
     elsif !packet['subsite'].blank? && subsite_access
       true
-    else
+    else  
+      # nil out invalid user
+      packet.session['user.id'] = nil
+      packet['user.id'] = nil
       false
     end
   end

@@ -9,10 +9,19 @@ module Orange
     def access_allowed?(packet, user)
       u = model_class.first(:open_id => user)
       unless u
-        # nil out invalid user
-        packet.session['user.id'] = nil
-        packet['user.id'] = nil
-        return false
+        users = model_class.all
+        # Deep open id search (take out trailing slash, etc.)
+        id = user.gsub(/^https?:\/\//, '').gsub(/\/$/, '')
+        matches = users.select{|u|
+          (id == u.open_id.gsub(/^https?:\/\//, '').gsub(/\/$/, ''))
+        }
+        if(matches.length > 0 && matches.first.allowed?(packet))
+          packet.session['user.id'] = matches.first.open_id
+          packet['user.id'] = matches.first.open_id
+          return true
+        else
+          return false
+        end
       end
       u.allowed?(packet)
     end

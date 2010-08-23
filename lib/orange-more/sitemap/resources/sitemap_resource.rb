@@ -260,7 +260,11 @@ module Orange
         resource = route.resource.to_sym
         return route.link_text unless orange.loaded?(resource)
         return route.link_text if route.resource_id.blank?
-        orange[resource].model_class.get(route.resource_id).__send__(match[1])
+        if my_resource = orange[resource].model_class.get(route.resource_id)
+          my_resource.__send__(match[1])
+        else
+          route.link_text
+        end
       else
         route.link_text
       end

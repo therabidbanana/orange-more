@@ -57,24 +57,34 @@ module Orange::Middleware
     
     def access_allowed?(packet)
       return true unless @locked.include?(packet['route.context'])
-      if packet['user.id'] || packet['orange.globals']['main_user'] == false
-        if @single && (packet['user.id'] == packet['orange.globals']['main_user'] )
-          true
-        elsif @single
+      if packet['user.id'] || orange.options['main_user'].blank?
+        if @single 
+          return true if(main_user?(packet))
           # Current id no good. 
-          packet['user.id'] = false
-          packet.session['user.id'] = false
-          false
+          packet['user.id'] = nil
+          packet.session['user.id'] = nil
+          return false
         # Main_user can always log in (root access)
-        elsif packet['user.id'] == packet['orange.globals']['main_user']
+        elsif main_user?(packet)
           orange[:users].new(packet, :open_id => packet['user.id'], :name => 'Main User') unless packet['user', false]
-          true
+          return true
         else
-          orange[:users].access_allowed?(packet, packet['user.id'])
+          return orange[:users].access_allowed?(packet, packet['user.id'])
         end
       else
-        false
+        return false
       end
+    end
+    
+    def main_user?(packet)
+      id = packet['user.id'].gsub(/^https?:\/\//, '').gsub(/\/$/, '')
+      users = orange.options['main_users'] || []
+      users = users.dup.push(orange.options['main_user'])
+      users = users.flatten.compact
+      matches = users.select{|user| 
+        (user == id) || (id == user.gsub(/^https?:\/\//, '').gsub(/\/$/, ''))
+      }
+      matches.length > 0 ? true : false
     end
     
     def need_to_handle?(packet)
