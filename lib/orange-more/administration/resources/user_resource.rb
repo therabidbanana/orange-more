@@ -11,6 +11,7 @@ module Orange
       unless u
         users = model_class.all
         # Deep open id search (take out trailing slash, etc.)
+        return false if user.blank?
         id = user.gsub(/^https?:\/\//, '').gsub(/\/$/, '')
         matches = users.select{|u|
           (id == u.open_id.gsub(/^https?:\/\//, '').gsub(/\/$/, ''))
