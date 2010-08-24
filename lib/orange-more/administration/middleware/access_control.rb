@@ -77,6 +77,7 @@ module Orange::Middleware
     end
     
     def main_user?(packet)
+      return false if packet['user.id'].blank?
       id = packet['user.id'].gsub(/^https?:\/\//, '').gsub(/\/$/, '')
       users = orange.options['main_users'] || []
       users = users.dup.push(orange.options['main_user'])
