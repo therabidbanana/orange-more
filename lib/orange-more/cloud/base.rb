@@ -1,0 +1,1 @@
+require 'orange-more/cloud/resources/cloud_resource'

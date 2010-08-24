@@ -1,5 +1,4 @@
-Dir.glob(File.join(File.dirname(__FILE__), 'middleware', '*.rb')).each {|f| require f }
-
+require 'orange-more/debugger/base'
 module Orange::Plugins
   class Debugger < Base
     views_dir  File.join(File.dirname(__FILE__), 'views')

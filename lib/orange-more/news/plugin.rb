@@ -1,5 +1,4 @@
-Dir.glob(File.join(File.dirname(__FILE__), 'cartons', '*.rb')).each {|f| require f }
-Dir.glob(File.join(File.dirname(__FILE__), 'resources', '*.rb')).each {|f| require f }
+require 'orange-more/news/base'
 
 module Orange::Plugins
   class News < Base

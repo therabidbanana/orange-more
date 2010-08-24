@@ -1,0 +1,1 @@
+require 'orange-more/debugger/middleware/debugger'

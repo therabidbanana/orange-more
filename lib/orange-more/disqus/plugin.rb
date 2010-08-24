@@ -1,4 +1,4 @@
-Dir.glob(File.join(File.dirname(__FILE__), 'resources', '*.rb')).each {|f| require f }
+require 'orange-more/disqus/base'
 
 module Orange::Plugins
   class Disqus < Base

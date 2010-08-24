@@ -1,10 +1,9 @@
-Dir.glob(File.join(File.dirname(__FILE__), 'cartons', '*.rb')).each {|f| require f }
-Dir.glob(File.join(File.dirname(__FILE__), 'resources', '*.rb')).each {|f| require f }
+require 'orange-more/pages/base'
 
 module Orange::Plugins
   class Pages < Base
     views_dir       File.join(File.dirname(__FILE__), 'views')
-    
+    prerouter   Orange::Middleware::DumbQuotes
     resource    Orange::PageResource.new    
   end
 end

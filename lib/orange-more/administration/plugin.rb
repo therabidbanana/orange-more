@@ -1,7 +1,4 @@
-require (File.join(File.dirname(__FILE__), 'cartons', 'site.rb'))
-Dir.glob(File.join(File.dirname(__FILE__), 'cartons', '*.rb')).each {|f| require f }
-Dir.glob(File.join(File.dirname(__FILE__), 'resources', '*.rb')).each {|f| require f }
-Dir.glob(File.join(File.dirname(__FILE__), 'middleware', '*.rb')).each {|f| require f }
+require 'orange-more/administration/base'
 
 module Orange::Plugins
   class Administration < Base

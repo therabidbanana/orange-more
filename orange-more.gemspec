@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{orange-more}
-  s.version = "0.6.0"
+  s.version = "0.6.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Haslem"]
-  s.date = %q{2010-08-23}
+  s.date = %q{2010-08-24}
   s.description = %q{Orange is a Ruby framework for building managed websites with code as simple as Sinatra}
   s.email = %q{therabidbanana@gmail.com}
   s.extra_rdoc_files = [
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
      "lib/orange-more/administration/assets/css/blueprint-print.css",
      "lib/orange-more/administration/assets/css/blueprint.css",
      "lib/orange-more/administration/assets/js/jquery.js",
+     "lib/orange-more/administration/base.rb",
      "lib/orange-more/administration/cartons/site.rb",
      "lib/orange-more/administration/cartons/site_carton.rb",
      "lib/orange-more/administration/cartons/user.rb",
@@ -37,10 +38,12 @@ Gem::Specification.new do |s|
      "lib/orange-more/administration/views/users/create.haml",
      "lib/orange-more/administration/views/users/edit.haml",
      "lib/orange-more/analytics.rb",
+     "lib/orange-more/analytics/base.rb",
      "lib/orange-more/analytics/middleware/analytics.rb",
      "lib/orange-more/analytics/plugin.rb",
      "lib/orange-more/analytics/resources/analytics_resource.rb",
      "lib/orange-more/assets.rb",
+     "lib/orange-more/assets/base.rb",
      "lib/orange-more/assets/cartons/asset_carton.rb",
      "lib/orange-more/assets/plugin.rb",
      "lib/orange-more/assets/resources/asset_resource.rb",
@@ -48,6 +51,7 @@ Gem::Specification.new do |s|
      "lib/orange-more/assets/views/assets/create.haml",
      "lib/orange-more/assets/views/assets/insert.haml",
      "lib/orange-more/blog.rb",
+     "lib/orange-more/blog/base.rb",
      "lib/orange-more/blog/cartons/blog.rb",
      "lib/orange-more/blog/cartons/blog_post.rb",
      "lib/orange-more/blog/plugin.rb",
@@ -60,6 +64,7 @@ Gem::Specification.new do |s|
      "lib/orange-more/blog/views/blog_posts/edit.haml",
      "lib/orange-more/blog/views/blog_posts/show.haml",
      "lib/orange-more/cloud.rb",
+     "lib/orange-more/cloud/base.rb",
      "lib/orange-more/cloud/plugin.rb",
      "lib/orange-more/cloud/resources/cloud_resource.rb",
      "lib/orange-more/contactforms.rb",
@@ -68,20 +73,24 @@ Gem::Specification.new do |s|
      "lib/orange-more/contactforms/assets/js/lib/jquery.form.js",
      "lib/orange-more/contactforms/assets/js/lib/jquery.js",
      "lib/orange-more/contactforms/assets/js/lib/jquery.metadata.js",
+     "lib/orange-more/contactforms/base.rb",
      "lib/orange-more/contactforms/cartons/contactform_carton.rb",
      "lib/orange-more/contactforms/plugin.rb",
      "lib/orange-more/contactforms/resources/contactforms_resource.rb",
      "lib/orange-more/contactforms/views/contactforms/contactform.haml",
      "lib/orange-more/debugger.rb",
      "lib/orange-more/debugger/assets/css/debug_bar.css",
+     "lib/orange-more/debugger/base.rb",
      "lib/orange-more/debugger/middleware/debugger.rb",
      "lib/orange-more/debugger/plugin.rb",
      "lib/orange-more/debugger/views/debug_bar.haml",
      "lib/orange-more/disqus.rb",
+     "lib/orange-more/disqus/base.rb",
      "lib/orange-more/disqus/plugin.rb",
      "lib/orange-more/disqus/resources/disqus_resource.rb",
      "lib/orange-more/disqus/views/disqus/comment_thread.haml",
      "lib/orange-more/news.rb",
+     "lib/orange-more/news/base.rb",
      "lib/orange-more/news/cartons/news.rb",
      "lib/orange-more/news/plugin.rb",
      "lib/orange-more/news/resources/news_resource.rb",
@@ -90,8 +99,10 @@ Gem::Specification.new do |s|
      "lib/orange-more/news/views/news/latest.haml",
      "lib/orange-more/news/views/news/sitemap_row.haml",
      "lib/orange-more/pages.rb",
+     "lib/orange-more/pages/base.rb",
      "lib/orange-more/pages/cartons/page_carton.rb",
      "lib/orange-more/pages/cartons/page_version_carton.rb",
+     "lib/orange-more/pages/middleware/dumb_quotes.rb",
      "lib/orange-more/pages/plugin.rb",
      "lib/orange-more/pages/resources/page_resource.rb",
      "lib/orange-more/pages/views/pages/edit.haml",
@@ -106,6 +117,7 @@ Gem::Specification.new do |s|
      "lib/orange-more/sitemap/assets/img/sitemap_up.png",
      "lib/orange-more/sitemap/assets/img/sitemap_up_d.png",
      "lib/orange-more/sitemap/assets/js/sitemap.js",
+     "lib/orange-more/sitemap/base.rb",
      "lib/orange-more/sitemap/cartons/route.rb",
      "lib/orange-more/sitemap/middleware/flex_router.rb",
      "lib/orange-more/sitemap/plugin.rb",
@@ -119,6 +131,7 @@ Gem::Specification.new do |s|
      "lib/orange-more/sitemap/views/sitemap/table_row.haml",
      "lib/orange-more/sitemap/views/sitemap/two_level.haml",
      "lib/orange-more/slices.rb",
+     "lib/orange-more/slices/base.rb",
      "lib/orange-more/slices/middleware/radius_parser.rb",
      "lib/orange-more/slices/plugin.rb",
      "lib/orange-more/slices/resources/radius.rb",
@@ -127,7 +140,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/therabidbanana/orange}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Plugins for Orange}
   s.test_files = [
     "spec/orange-core/application_spec.rb",
@@ -168,7 +181,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<orange-core>, [">= 0.5.7"])
       s.add_runtime_dependency(%q<dm-is-awesome_set>, [">= 0.11.0"])
       s.add_runtime_dependency(%q<dm-timestamps>, [">= 1.0.0"])
