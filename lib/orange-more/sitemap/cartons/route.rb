@@ -26,7 +26,11 @@ class OrangeRoute < Orange::SiteCarton
       end
     end
   end
-
+  
+  def default_slug?
+    /^page-\d+/ =~ slug
+  end
+  
   def self.home_for_site(site_id)
     site_id = OrangeSite.get(site_id) unless site_id.is_a? OrangeSite
     root(:orange_site => site_id) 
