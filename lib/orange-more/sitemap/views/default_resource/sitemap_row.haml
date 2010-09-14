@@ -16,14 +16,15 @@
       .move_actions.dent_actions
         = form_link('Indent', route_to(:sitemap, route.id, 'indent'), false, {:method => 'post', :class => 'indent arrow'}) if route.previous_sibling && route.previous_sibling.level == route.level
         %p= '&nbsp;'
-    %h4 #{route.link_text} <span>(#{route.full_path})</span>
+    %h4 #{route.link_text} <span>(#{route_to(route)})</span>
     .linked_to
       %p 
         Linked to: 
         %a{:href => route.resource.blank? ?  '#' : route_to(route.resource, route.resource_id, 'edit')} [#{route.resource}] ##{route.resource_id}
       %p  
         Views:
-        = orange[:analytics].pageviews(route.full_path)
+        - if(orange.loaded?(:analytics))
+          = orange[:analytics].pageviews(route_to(route))
     .actions
       = form_link('Delete', route_to(:sitemap, route.id, 'delete'), 'Are you sure you want to delete this?', {:method => 'delete'})
       %a{:href => route_to(:sitemap, route.id, 'edit')} Edit

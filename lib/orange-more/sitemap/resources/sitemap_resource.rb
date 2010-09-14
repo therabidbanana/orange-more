@@ -228,9 +228,9 @@ module Orange
       include_subsite = opts.delete(:include_subsite) || false
       m = model_class.first(opts)
       if !packet['subsite'].blank? && include_subsite
-        return orange[:subsites].url_for(packet).gsub(/\/$/, '') + (m ? m.full_path : '#not_found')
+        return orange[:subsites].url_for(packet).gsub(/\/$/, '') + (m ? packet.route_to(m) : '#not_found')
       else
-        return (m ? m.full_path : '#not_found')
+        return (m ? packet.route_to(m) : '#not_found')
       end
     end
     
