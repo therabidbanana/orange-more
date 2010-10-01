@@ -30,7 +30,11 @@ module Orange::Pulp::DebuggerHelpers
     when String
       Rack::Utils.escape_html(obj)
     else
-      Rack::Utils.escape_html(obj.inspect)
+      begin 
+        Rack::Utils.escape_html(obj.inspect)
+      rescue Exception => e
+        "Object #{obj.class.to_s} could not be inspected"
+      end
     end
   end
 end
