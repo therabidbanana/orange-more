@@ -73,7 +73,7 @@ module Orange
     end
     
     def onSave(packet, obj, params = {})
-      if(file = params['file'][:tempfile])
+      if(params['file'] && file = params['file'][:tempfile])
         file_path = handle_new_file(params['file'][:filename], file)
         if(params['file2'] && secondary = params['file2'][:tempfile]) 
           secondary_path = handle_new_file(params['file2'][:filename], secondary)
@@ -85,10 +85,10 @@ module Orange
         params['secondary_path'] = secondary_path if secondary_path
         params['mime_type'] = params['file'][:type] if file_path
         params['secondary_mime_type'] = params['file2'][:type] if secondary_path
-        params.delete('file')
-        params.delete('file2')
         params['s3_bucket'] = options[:s3_bucket] if options[:s3_bucket]
       end
+      params.delete('file')
+      params.delete('file2')
       obj.update(params)
     end
     
