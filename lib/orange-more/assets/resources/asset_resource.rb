@@ -72,6 +72,26 @@ module Orange
       m
     end
     
+    def onSave(packet, obj, params = {})
+      if(file = params['file'][:tempfile])
+        file_path = handle_new_file(params['file'][:filename], file)
+        if(params['file2'] && secondary = params['file2'][:tempfile]) 
+          secondary_path = handle_new_file(params['file2'][:filename], secondary)
+        else
+          secondary_path = nil
+        end
+        
+        params['path'] = file_path if file_path
+        params['secondary_path'] = secondary_path if secondary_path
+        params['mime_type'] = params['file'][:type] if file_path
+        params['secondary_mime_type'] = params['file2'][:type] if secondary_path
+        params.delete('file')
+        params.delete('file2')
+        params['s3_bucket'] = options[:s3_bucket] if options[:s3_bucket]
+      end
+      obj.update(params)
+    end
+    
     def s3_connect!
       if(options[:s3_bucket])
         id = options[:s3_access_key_id] || ENV['S3_KEY']
