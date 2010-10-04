@@ -22,7 +22,7 @@ class OrangeAsset < Orange::Carton
   
   def to_s
     <<-DOC
-    {"id": #{self.id}, "html": "#{self.to_asset_tag}"}
+    {"id": #{self.id}, "name": "#{self.name}", "caption": "#{self.caption}", "html": "#{self.to_asset_tag}"}
     DOC
   end
   
