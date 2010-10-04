@@ -4,7 +4,7 @@ module Orange
     # Define a helper for input type="text" type database stuff
     # Show in a context if wrapped in one of the helpers
     def self.asset(name, opts = {})
-      add_scaffold(name, :asset, Integer, opts)
+      add_scaffold(name, :asset, Integer, opts.with_defaults(:lazy => true))
     end
   end
   
