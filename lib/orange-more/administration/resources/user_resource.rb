@@ -20,7 +20,9 @@ module Orange
           packet.session['user.id'] = matches.first.open_id
           packet['user.id'] = matches.first.open_id
           return true
-        else
+        else  
+          packet['user.id'] = nil
+          packet.session['user.id'] = nil
           return false
         end
       end
