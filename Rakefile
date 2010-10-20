@@ -32,6 +32,7 @@ Jeweler::Tasks.new do |gemspec|
   gemspec.add_dependency('radius', '>= 0')
   gemspec.add_dependency('rest-client', '>= 0')
   gemspec.add_dependency('mail', '>= 0')
+  gemspec.add_dependency('i18n', '>= 0')
   gemspec.add_dependency('gattica', '>= 0')
   gemspec.add_development_dependency "rspec", ">= 0"
   gemspec.add_development_dependency "rack-test", ">= 0"
