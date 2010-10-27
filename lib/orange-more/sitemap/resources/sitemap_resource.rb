@@ -162,12 +162,13 @@ module Orange
     end
     
     def create_home_for_site(packet, site_id)
-      page = orange[:pages, true].new(packet, :title => 'Homepage', :body => 'this is an orange webpage', :no_reroute => true)
+      page = orange[:pages, true].new(packet, :title => 'Homepage', :body => 'this is an orange webpage', :no_reroute => true, :published => true)
       if page
-        model_class.create_home_for_site(site_id, :resource => 'pages', :resource_id => page.id)
+        ret = model_class.create_home_for_site(site_id, :resource => 'pages', :resource_id => page.id)
       else
-        model_class.create_home_for_site(site_id)
+        ret = model_class.create_home_for_site(site_id)
       end
+      orange.fire(:sitemap_created, {:packet => packet, :site_id => site_id})
     end
     
     def one_level(packet, opts = {})
