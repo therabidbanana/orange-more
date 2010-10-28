@@ -169,6 +169,7 @@ module Orange
         ret = model_class.create_home_for_site(site_id)
       end
       orange.fire(:sitemap_created, {:packet => packet, :site_id => site_id})
+      ret
     end
     
     def one_level(packet, opts = {})
