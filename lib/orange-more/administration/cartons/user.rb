@@ -4,9 +4,8 @@ class OrangeUser < Orange::Carton
   id
   admin do
     title :name
-    text :open_id
   end
-  
+  has n, :orange_identities
   has n, :orange_sites, :through => Resource
   
   def allowed?(packet)
@@ -23,6 +22,17 @@ class OrangeUser < Orange::Carton
       false
     end
   end
+end
+
+class OrangeIdentity < Orange::Carton
+  id
+  admin do
+    title :provider, :length => 255
+    text :uid, :length => 255
+    text :name, :length => 255
+    text :email, :length => 255
+  end
+  belongs_to :orange_user
 end
 
 class OrangeSite 
