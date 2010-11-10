@@ -1,11 +1,47 @@
 %html
   %head
     %title Woah.
+    %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"}
     :javascript
       function openOpenIDWindow(openid){
-        $('#login').innerHTML = 'Signing you in...';
-        if(openid) window.open('/auth/open_id?openid_url='+encodeURIComponent(openid), 'openid_popup', 'width=500,height=450');
-        else window.open('/auth/open_id', 'openid_popup', 'width=500,height=450');
+        $('#login-box .providers').hide();
+        $('#login-box .logging_in').show();
+        var win;
+        if(openid)
+          win = window.open('/auth/open_id?openid_url='+encodeURIComponent(openid), 'openid_popup', 'width=500,height=450');
+        else 
+          win = window.open('/auth/open_id', 'openid_popup', 'width=500,height=450');
+        watchAuthPopup(win);
+      }
+      function openOAuthWindow(url){
+        $('#login-box .providers').hide();
+        $('#login-box .logging_in').show();
+        watchAuthPopup(window.open(url, 'openid_popup','width=900,height=600'));
+      }
+
+      function watchAuthPopup(win){
+        var timer = setInterval(function() {   
+            if(win.closed) {  
+                clearInterval(timer);  
+                handleAuthResponse('', false);
+            }
+        }, 1000);
+      }
+      function handleAuthResponse(redirect_to, valid){
+        if(valid){
+          window.location = redirect_to;
+        }
+        else{
+          $('#login-box .providers').show();
+          $('#login-box .providers .login_error').show();
+          $('#login-box .logging_in').hide();
+        }
+      }
+      function openGoogleAppsWindow(){
+        $('#login-box .providers').hide();
+        $('#login-box .logging_in').show();
+
+        watchAuthPopup(window.open('/auth/google_apps', 'openid_popup', 'width=500,height=450'));
       }
   %body
     %h2 Wait a minute... 
@@ -16,7 +52,8 @@
       %img{:src => "/assets/_administration_/images/google_badge.png", :border => "0"}
     %a{:href => "#", :onclick => "openOpenIDWindow(\"https://www.yahoo.com\"); return false;"}
       %img{:src => "/assets/_administration_/images/yahoo_badge.png", :border => "0"}
+    - unless(orange.options['omniauth_google_apps'].blank?)
+      %a{:href => "#", :onclick => "openGoogleAppsWindow(); return false;"}
+        %img{:src => orange.options['omniauth_google_apps']['icon'] || "/assets/_administration_/images/google_badge.png", :border => "0"}
     %a{:href => "#", :onclick => "openOpenIDWindow(false); return false;"}
       %img{:src => "/assets/_administration_/images/openid_badge.png", :border => "0"}
-
-      

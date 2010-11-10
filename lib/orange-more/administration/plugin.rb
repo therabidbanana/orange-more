@@ -7,7 +7,8 @@ module Orange::Plugins
     templates_dir   File.join(File.dirname(__FILE__), 'templates')
     
     resource    Orange::AdminResource.new, :admin
-    resource    Orange::UserResource.new
+    resource    Orange::UserResource.new, :users
+    resource    Orange::IdentityResource.new, :identities
     resource    Orange::SiteResource.new
     
     prerouter   Orange::Middleware::SiteLoad

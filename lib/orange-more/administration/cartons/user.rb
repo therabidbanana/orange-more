@@ -6,14 +6,10 @@ class OrangeUser < Orange::Carton
     title :name
   end
   has n, :orange_identities
-  has n, :orange_sites, :through => Resource
+  belongs_to :orange_site
   
   def allowed?(packet)
-    subsite_access = packet['subsite'].blank? ? false : self.orange_sites.first(:id => packet['subsite'].id)
-    site_access = self.orange_sites.first(:id => packet['site'].id)
-    if(!site_access.blank?)
-      true
-    elsif !packet['subsite'].blank? && subsite_access
+    if(self.orange_site_id == packet['site'].id)
       true
     else  
       # nil out invalid user
@@ -21,6 +17,16 @@ class OrangeUser < Orange::Carton
       packet['user.id'] = nil
       false
     end
+  end
+  
+  def give_token
+    self.orange_identities.new(:provider => "token", :uid => Digest::SHA1.hexdigest("#{self.name}::#{Time.now.to_s}"))
+  end
+  
+  def reset_token!
+    self.orange_identities.all(:provider => "token").destroy
+    give_token
+    save
   end
 end
 
@@ -31,10 +37,10 @@ class OrangeIdentity < Orange::Carton
     text :uid, :length => 255
     text :name, :length => 255
     text :email, :length => 255
+    belongs :orange_user, 'OrangeUser'
   end
-  belongs_to :orange_user
 end
 
 class OrangeSite 
-  has n, :orange_users, :through => Resource
+  has n, :orange_users
 end
