@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Haslem"]
-  s.date = %q{2010-10-27}
+  s.date = %q{2010-11-10}
   s.description = %q{Orange is a Ruby framework for building managed websites with code as simple as Sinatra}
   s.email = %q{therabidbanana@gmail.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,16 @@ Gem::Specification.new do |s|
      "lib/orange-more/administration/assets/css/blueprint-ie.css",
      "lib/orange-more/administration/assets/css/blueprint-print.css",
      "lib/orange-more/administration/assets/css/blueprint.css",
+     "lib/orange-more/administration/assets/images/ajax_loader.gif",
+     "lib/orange-more/administration/assets/images/aol_badge.png",
+     "lib/orange-more/administration/assets/images/basecamp_badge.png",
+     "lib/orange-more/administration/assets/images/facebook_badge.png",
+     "lib/orange-more/administration/assets/images/github_badge.png",
+     "lib/orange-more/administration/assets/images/google_badge.png",
+     "lib/orange-more/administration/assets/images/linkedin_badge.png",
+     "lib/orange-more/administration/assets/images/openid_badge.png",
+     "lib/orange-more/administration/assets/images/twitter_badge.png",
+     "lib/orange-more/administration/assets/images/yahoo_badge.png",
      "lib/orange-more/administration/assets/js/jquery.js",
      "lib/orange-more/administration/base.rb",
      "lib/orange-more/administration/cartons/site.rb",
@@ -29,8 +39,10 @@ Gem::Specification.new do |s|
      "lib/orange-more/administration/cartons/user.rb",
      "lib/orange-more/administration/middleware/access_control.rb",
      "lib/orange-more/administration/middleware/site_load.rb",
+     "lib/orange-more/administration/middleware/token_strategy.rb",
      "lib/orange-more/administration/plugin.rb",
      "lib/orange-more/administration/resources/admin_resource.rb",
+     "lib/orange-more/administration/resources/identity_resource.rb",
      "lib/orange-more/administration/resources/site_resource.rb",
      "lib/orange-more/administration/resources/user_resource.rb",
      "lib/orange-more/administration/templates/admin.haml",
@@ -172,7 +184,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<orange-core>, [">= 0.5.7"])
       s.add_runtime_dependency(%q<dm-is-awesome_set>, [">= 0.11.0"])
       s.add_runtime_dependency(%q<dm-timestamps>, [">= 1.0.0"])
-      s.add_runtime_dependency(%q<rack-openid>, [">= 0"])
+      s.add_runtime_dependency(%q<omniauth>, [">= 0"])
       s.add_runtime_dependency(%q<openid_dm_store>, [">= 0"])
       s.add_runtime_dependency(%q<radius>, [">= 0"])
       s.add_runtime_dependency(%q<rest-client>, [">= 0"])
@@ -185,7 +197,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<orange-core>, [">= 0.5.7"])
       s.add_dependency(%q<dm-is-awesome_set>, [">= 0.11.0"])
       s.add_dependency(%q<dm-timestamps>, [">= 1.0.0"])
-      s.add_dependency(%q<rack-openid>, [">= 0"])
+      s.add_dependency(%q<omniauth>, [">= 0"])
       s.add_dependency(%q<openid_dm_store>, [">= 0"])
       s.add_dependency(%q<radius>, [">= 0"])
       s.add_dependency(%q<rest-client>, [">= 0"])
@@ -199,7 +211,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<orange-core>, [">= 0.5.7"])
     s.add_dependency(%q<dm-is-awesome_set>, [">= 0.11.0"])
     s.add_dependency(%q<dm-timestamps>, [">= 1.0.0"])
-    s.add_dependency(%q<rack-openid>, [">= 0"])
+    s.add_dependency(%q<omniauth>, [">= 0"])
     s.add_dependency(%q<openid_dm_store>, [">= 0"])
     s.add_dependency(%q<radius>, [">= 0"])
     s.add_dependency(%q<rest-client>, [">= 0"])
