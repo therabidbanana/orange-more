@@ -8,6 +8,10 @@ module Orange
       orange[:admin].add_link("Settings", :resource => @my_orange_name, :text => 'Users')
     end
     
+    def profile_url(packet)
+      packet.route_to(:users, :profile, :context => :admin)
+    end
+    
     def access_allowed?(packet, user)
       id = OrangeIdentity.first(:provider => packet['user.provider'], :uid => packet['user.uid'])
       u = id ? id.orange_user : nil

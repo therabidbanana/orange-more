@@ -160,7 +160,7 @@ module Orange::Middleware
         when "token"
           # If logged in with token, redirect to profile right away so they can add a real login.
           packet.flash['message'] = "If you haven't already, please add a login provider."
-          packet.flash['user.after_login'] = "/admin/users/profile"
+          packet.flash['user.after_login'] = orange[:users].profile_url(packet)
         end
         after = packet.request.params['redirect_to'] || packet.flash('user.after_login') || '/'
         popup = packet.flash('user.popup')
