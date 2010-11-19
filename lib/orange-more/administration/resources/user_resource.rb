@@ -27,7 +27,12 @@ module Orange
           packet.session['user.uid'] = uid
           packet['user.uid'] = uid
           return true
-        else  
+        else    
+          if(packet['user.provider'] == 'token')
+            packet.flash['error'] = 'Invalid or expired token.' 
+          else
+            packet.flash['error'] = 'Invalid credentials. Make sure you have permission to log in, or try a different acccount'
+          end
           packet['user.id'] = nil
           packet['user.uid'] = nil
           packet['user.provider'] = nil
