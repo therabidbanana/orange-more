@@ -77,6 +77,7 @@ module Orange::Middleware
                 :provider => packet['user.provider'], 
                 :uid => packet['user.uid'], 
                 :name => name,
+                :nickname => packet['user.id'],
                 :email => email
               }], 
               :name => name, :orange_site => packet['site'], :no_reroute => true})
