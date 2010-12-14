@@ -27,7 +27,7 @@ Jeweler::Tasks.new do |gemspec|
   gemspec.add_dependency('orange-core', '>= 0.5.7')
   gemspec.add_dependency('dm-is-awesome_set', '>= 0.11.0')
   gemspec.add_dependency('dm-timestamps', '>= 1.0.0')
-  gemspec.add_dependency('rack-openid', '>= 0')
+  gemspec.add_dependency('omniauth', '>= 0')
   gemspec.add_dependency('openid_dm_store', '>= 0')
   gemspec.add_dependency('radius', '>= 0')
   gemspec.add_dependency('rest-client', '>= 0')

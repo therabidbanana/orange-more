@@ -36,6 +36,7 @@ class OrangeIdentity < Orange::Carton
     title :provider, :length => 255
     text :uid, :length => 255
     text :name, :length => 255
+    text :nickname, :length => 255
     text :email, :length => 255
     belongs :orange_user, 'OrangeUser'
   end

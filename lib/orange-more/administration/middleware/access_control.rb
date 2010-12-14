@@ -171,7 +171,7 @@ module Orange::Middleware
         packet.session['omniauth.auth'] = packet['omniauth.auth']
         packet.session['user.provider'] = packet['user.provider']
         if(packet.session['user.map_account'] && packet['user'])
-          packet['user'].orange_identities.create(:provider => packet['user.provider'], :uid => packet['user.uid'], :name => user_info["name"], :email => user_info["email"] || "none")
+          packet['user'].orange_identities.create(:provider => packet['user.provider'], :uid => packet['user.uid'], :name => user_info["name"], :email => user_info["email"] || "none", :nickname => packet['user.id'])
           packet.session['user.map_account'] = false
         end
         
