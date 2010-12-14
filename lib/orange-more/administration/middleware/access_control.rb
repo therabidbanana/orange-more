@@ -68,6 +68,7 @@ module Orange::Middleware
       if packet['user.id'] || packet['user.uid']
         # Main_user can always log in (root access)
         if main_user?(packet)
+          packet['user.main_user'] = true
           unless packet['user', false]
             # Create a user if one doesn't already exist
             name = packet['user.info', {"name" => nil}]['name'] || "Main User"
