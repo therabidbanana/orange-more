@@ -135,6 +135,11 @@ module Orange::Middleware
       end
       path = packet['route.path'] || packet.request.path 
       # If trying to login
+      if path.match(/\/auth\/([^\/]+)\/?/)
+        packet[:status] = 404
+        packet[:content] = "Not found"
+        packet.finish
+      end
       if auth_match = path.match(/\/auth\/([^\/]+)\/callback/)
         provider = packet['user.provider'] = auth_match[1]
         packet.reroute('/') unless packet['omniauth.auth', false]
